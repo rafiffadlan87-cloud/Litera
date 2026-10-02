@@ -55,13 +55,40 @@
                 </div>
             </div>
             <div class="flex items-center gap-space-sm">
-                <a class="hidden sm:inline-flex items-center justify-center h-10 px-space-lg rounded-lg font-label-lg text-label-lg text-on-surface hover:bg-surface-container-low transition-colors"
-                    data-path="masuk" href="#">Masuk</a>
-                <a class="inline-flex items-center justify-center h-10 px-space-lg rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg hover:bg-primary shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] transition-all active:scale-95"
-                    data-path="daftar" href="#">Daftar</a>
-                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs">
-                    <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
-                </div>
+                @guest
+                    <a href="{{ route('login') }}"
+                        class="hidden sm:inline-flex items-center justify-center h-10 px-space-lg rounded-lg font-label-lg text-label-lg text-on-surface hover:bg-surface-container-low transition-colors"
+                        data-path="masuk">
+                        Masuk
+                    </a>
+                    <a href="{{ route('register') }}"
+                        class="inline-flex items-center justify-center h-10 px-space-lg rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg hover:bg-primary shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] transition-all active:scale-95"
+                        data-path="daftar">
+                        Daftar
+                    </a>
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs">
+                        <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+                    </div>
+                @else
+                    <span class="hidden sm:block font-label-lg text-on-surface font-semibold">
+                        Halo, {{ Auth::user()->name }}
+                    </span>
+                    <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs"
+                        title="{{ Auth::user()->name }}">
+                        <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+                    </div>
+                    <a href="{{ route('siswa.dashboard') }}"
+                        class="hidden md:inline-flex items-center justify-center h-10 px-space-lg rounded-lg bg-emerald-500 text-white font-label-lg text-label-lg hover:bg-emerald-600 shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] transition-all active:scale-95">
+                        Dashboard
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit"
+                            class="inline-flex items-center justify-center h-10 px-space-lg rounded-lg bg-rose-500 text-white font-label-lg text-label-lg hover:bg-rose-600 shadow-[0_1px_3px_0_rgba(15,23,42,0.05)] transition-all active:scale-95">
+                            Logout
+                        </button>
+                    </form>
+                @endguest
             </div>
         </div>
     </header>
@@ -671,7 +698,7 @@
     <script>
         // Simple interactive category chip toggling
         document.querySelectorAll('.filter-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
+            chip.addEventListener('click', function () {
                 document.querySelectorAll('.filter-chip').forEach(c => {
                     c.classList.remove('bg-primary-container', 'text-on-primary');
                     c.classList.add('bg-surface-container-low', 'text-secondary');
@@ -683,7 +710,7 @@
 
         // Bookmark toggle micro-interaction
         document.querySelectorAll('button[title="Simpan ke favorit"]').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const icon = this.querySelector('.material-symbols-outlined');
                 if (icon.textContent === 'bookmark_border') {
                     icon.textContent = 'bookmark';
