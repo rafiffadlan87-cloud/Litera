@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="LITERA Logo" width="160"/>
+  <img src="assets/logo.svg" alt="LITERA Logo" width="160"/>
 </p>
 
 <h1 align="center">LITERA — Sistem Informasi Perpustakaan Digital Terpadu</h1>
