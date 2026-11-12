@@ -1,5 +1,10 @@
-<aside
-    class="fixed left-0 top-0 h-full w-72 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-sm">
+<button id="sidebarToggle" aria-label="Buka menu"
+    class="fixed top-3 left-4 z-[60] w-10 h-10 rounded-xl bg-primary-container text-on-primary flex items-center justify-center shadow-md lg:hidden">
+    <span class="material-symbols-outlined text-[22px]">menu</span>
+</button>
+<div id="sidebarOverlay" class="fixed inset-0 z-[45] bg-black/50 hidden lg:hidden"></div>
+<aside id="sidebarDrawer"
+    class="fixed left-0 top-0 h-full w-72 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-sm -translate-x-full lg:translate-x-0 transition-transform duration-300">
     <div class="flex flex-col flex-1 overflow-y-auto">
         <div class="flex items-center gap-space-md px-margin py-space-lg">
             <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
@@ -35,33 +40,38 @@
                 <span class="material-symbols-outlined text-[20px]">sell</span>
                 <span>Kelola Kategori</span>
             </a>
-            <a href="#"
-                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary">
+            <a href="{{ route('admin.members') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.members*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
                 <span class="material-symbols-outlined text-[20px]">group</span>
                 <span>Kelola Anggota</span>
             </a>
-            <a href="#"
-                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary">
+            <a href="{{ route('admin.petugas') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.petugas*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
                 <span class="material-symbols-outlined text-[20px]">badge</span>
                 <span>Kelola Petugas</span>
             </a>
-            <a href="#"
-                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary">
+            <a href="{{ route('admin.circulation') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.circulation*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
                 <span class="material-symbols-outlined text-[20px]">swap_horiz</span>
                 <span>Peminjaman</span>
             </a>
-            <a href="#"
-                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary">
+            <a href="{{ route('admin.extensions') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.extensions*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
                 <span class="material-symbols-outlined text-[20px]">update</span>
                 <span>Perpanjangan</span>
             </a>
-            <a href="#"
-                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary">
+            <a href="{{ route('admin.bookings') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.bookings*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
+                <span class="material-symbols-outlined text-[20px]">bookmark</span>
+                <span>Kelola Booking</span>
+            </a>
+            <a href="{{ route('admin.reports') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.reports*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
                 <span class="material-symbols-outlined text-[20px]">bar_chart</span>
                 <span>Laporan</span>
             </a>
-            <a href="#"
-                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary">
+            <a href="{{ route('admin.settings') }}"
+                class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('admin.settings*') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
                 <span class="material-symbols-outlined text-[20px]">settings</span>
                 <span>Pengaturan</span>
             </a>
@@ -78,3 +88,20 @@
         </form>
     </div>
 </aside>
+<script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarDrawer = document.getElementById('sidebarDrawer');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const openSidebar = () => {
+        sidebarDrawer.classList.remove('-translate-x-full');
+        sidebarOverlay.classList.remove('hidden');
+    };
+    const closeSidebar = () => {
+        sidebarDrawer.classList.add('-translate-x-full');
+        sidebarOverlay.classList.add('hidden');
+    };
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+    document.querySelectorAll('#sidebarDrawer a, #sidebarDrawer button').forEach(el => el.addEventListener('click',
+        closeSidebar));
+</script>

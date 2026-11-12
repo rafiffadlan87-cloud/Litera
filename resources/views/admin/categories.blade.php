@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Kelola Kategori - LITERA Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -61,12 +62,12 @@
                     },
                     fontFamily: {
                         "body-md": ["Plus Jakarta Sans", "sans-serif"],
-                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Fraunces", "serif"],
                         "label-sm": ["Plus Jakarta Sans"],
                         "label-md": ["Plus Jakarta Sans"],
-                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Fraunces", "serif"],
                         "label-lg": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Fraunces", "serif"],
                         "body-lg": ["Plus Jakarta Sans"],
                         "body-sm": ["Plus Jakarta Sans"]
                     }
@@ -82,9 +83,9 @@
     @include('partials.admin-sidebar')
 
     {{-- MAIN --}}
-    <div class="pl-72 flex flex-col min-h-screen">
+    <div class="lg:pl-72 flex flex-col min-h-screen">
         <header
-            class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
+            class="fixed top-0 left-0 lg:left-72 right-0 h-16 pl-16 lg:pl-margin-tablet bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
             <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md">
                 <span class="text-secondary">Panel Admin</span>
                 <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>

@@ -1,5 +1,10 @@
-    <aside
-        class="fixed left-0 top-0 h-full w-72 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-sm">
+    <button id="sidebarToggle" aria-label="Buka menu"
+        class="fixed top-3 left-4 z-[60] w-10 h-10 rounded-xl bg-primary-container text-on-primary flex items-center justify-center shadow-md lg:hidden">
+        <span class="material-symbols-outlined text-[22px]">menu</span>
+    </button>
+    <div id="sidebarOverlay" class="fixed inset-0 z-[45] bg-black/50 hidden lg:hidden"></div>
+    <aside id="sidebarDrawer"
+        class="fixed left-0 top-0 h-full w-72 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-sm -translate-x-full lg:translate-x-0 transition-transform duration-300">
         <div class="flex flex-col flex-1 overflow-y-auto">
             <div class="flex items-center gap-space-md px-margin py-space-lg">
                 <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
@@ -60,3 +65,20 @@
             </form>
         </div>
     </aside>
+    <script>
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarDrawer = document.getElementById('sidebarDrawer');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const openSidebar = () => {
+            sidebarDrawer.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+        };
+        const closeSidebar = () => {
+            sidebarDrawer.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        };
+        sidebarToggle.addEventListener('click', openSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+        document.querySelectorAll('#sidebarDrawer a, #sidebarDrawer button').forEach(el => el.addEventListener('click',
+            closeSidebar));
+    </script>

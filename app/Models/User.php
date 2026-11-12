@@ -8,13 +8,15 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
+        'status'
     ];
 
     protected $hidden = [
@@ -48,5 +50,10 @@ class User extends Authenticatable
     public function isSiswa()
     {
         return $this->role === 'siswa';
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

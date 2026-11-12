@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Kelola Buku - LITERA Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -73,12 +74,12 @@
                     },
                     fontFamily: {
                         "body-md": ["Plus Jakarta Sans", "sans-serif"],
-                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Fraunces", "serif"],
                         "label-sm": ["Plus Jakarta Sans"],
                         "label-md": ["Plus Jakarta Sans"],
-                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Fraunces", "serif"],
                         "label-lg": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Fraunces", "serif"],
                         "body-lg": ["Plus Jakarta Sans"],
                         "body-sm": ["Plus Jakarta Sans"]
                     }
@@ -92,9 +93,9 @@
 
     @include('partials.admin-sidebar')
 
-    <div class="pl-72 min-h-screen flex flex-col bg-background">
+    <div class="lg:pl-72 min-h-screen flex flex-col bg-background">
         <header
-            class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-space-xl">
+            class="fixed top-0 left-0 lg:left-72 right-0 h-16 pl-16 lg:pl-margin-tablet bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-space-xl">
             <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md">
                 <span class="text-outline">Portal Admin</span>
                 <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
@@ -154,7 +155,7 @@
                 <button onclick="openAddBookModal()"
                     class="flex items-center gap-space-xs px-4 py-2.5 bg-primary-container text-on-primary rounded-xl font-label-lg shadow-sm hover:brightness-105 active:scale-95">
                     <span class="material-symbols-outlined text-[20px]">add</span>
-                    <span>+ Tambah Buku</span>
+                    <span>Tambah Buku</span>
                 </button>
             </div>
 
@@ -276,6 +277,7 @@
                         </thead>
                         <tbody class="divide-y divide-surface-container-low font-body-sm">
                             @forelse($books as $i => $book)
+                            
                                 @php
                                     $borrowed = $book->borrowings()->whereNull('returned_at')->count();
                                     $totalCopies = $book->stock + $borrowed;
@@ -540,6 +542,16 @@
         }
     </script>
 
+    @if (request('add'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                ['addModal', 'addBookModal', 'modalTambah'].forEach(id => {
+                    const m = document.getElementById(id);
+                    if (m) m.classList.remove('hidden');
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>

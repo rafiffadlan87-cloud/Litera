@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Booking / Reservasi - LITERA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -61,12 +62,12 @@
                     },
                     fontFamily: {
                         "body-md": ["Plus Jakarta Sans", "sans-serif"],
-                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Fraunces", "serif"],
                         "label-sm": ["Plus Jakarta Sans"],
                         "label-md": ["Plus Jakarta Sans"],
-                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Fraunces", "serif"],
                         "label-lg": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Fraunces", "serif"],
                         "body-lg": ["Plus Jakarta Sans"],
                         "body-sm": ["Plus Jakarta Sans"]
                     }
@@ -80,9 +81,9 @@
 
     @include('partials.siswa-sidebar')
 
-    <div class="pl-72 flex flex-col min-h-screen">
+    <div class="lg:pl-72 flex flex-col min-h-screen">
         <header
-            class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
+            class="fixed top-0 left-0 lg:left-0 lg:left-72 right-0 h-16 pl-16 lg:pl-margin-tablet bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between pr-margin-tablet">
             <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md">
                 <span class="text-secondary">Portal Siswa</span>
                 <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
@@ -96,6 +97,7 @@
         <main class="relative pt-16 w-full flex-1 px-margin-tablet py-space-xl bg-background">
             <div class="flex flex-col w-full">
 
+                {{-- Alert --}}
                 @if (session('success'))
                     <div
                         class="p-4 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center gap-2 mb-4">
@@ -114,8 +116,8 @@
                 <div class="flex items-center justify-between mb-space-md">
                     <div>
                         <h1 class="font-headline-lg text-headline-lg text-on-surface">Booking / Reservasi</h1>
-                        <p class="font-body-md text-secondary mt-1">Tahan buku favoritmu, ambil di Meja Sirkulasi dalam
-                            2 hari.</p>
+                        <p class="font-body-md text-secondary mt-1">Reservasi khusus buku yang stoknya habis — kamu
+                            diprioritaskan saat buku tersedia kembali.</p>
                     </div>
                     <span class="px-3 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md">
                         {{ $bookings->where('status', 'aktif')->count() }} Booking Aktif
@@ -130,9 +132,8 @@
                     </div>
                     <p class="font-body-sm text-on-surface-variant leading-relaxed">
                         <strong class="text-on-primary-fixed">Alur booking:</strong> klik "Booking / Reservasi" di
-                        halaman detail buku → 1 eksemplar dikunci untukmu selama 2 hari → klik "Ambil Sekarang" untuk
-                        mengubahnya menjadi peminjaman aktif, atau "Batalkan" jika berubah pikiran. Lewat 2 hari,
-                        booking kadaluarsa dan stok pulih otomatis.
+                        halaman detail buku stok habis → kamu diprioritaskan selama 14 hari → saat stok tersedia, klik
+                        "Ambil Sekarang" untuk mengubahnya jadi peminjaman aktif, atau "Batalkan" kalau berubah pikiran.
                     </p>
                 </div>
 
@@ -150,7 +151,7 @@
                                         <span
                                             class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-amber-100 text-amber-900 font-bold">
                                             <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-                                            Menunggu Pengambilan
+                                            Menunggu Buku Tersedia
                                         </span>
                                     @elseif($b->status === 'diambil')
                                         <span
@@ -184,14 +185,14 @@
                                             class="font-medium text-on-surface">{{ $b->created_at->format('d M Y') }}</span>
                                     </span>
                                     <span class="flex items-center gap-1">
-                                        <span class="text-outline text-label-sm">Batas Ambil:</span>
+                                        <span class="text-outline text-label-sm">Berlaku sampai:</span>
                                         <span
                                             class="font-bold {{ $b->status === 'aktif' ? 'text-tertiary' : 'text-on-surface' }}">{{ $b->pickup_deadline->format('d M Y') }}</span>
                                     </span>
                                     <span class="flex items-center gap-1">
                                         <span
-                                            class="material-symbols-outlined text-[15px] text-outline">location_on</span>
-                                        <span>Meja Sirkulasi Lantai 1</span>
+                                            class="material-symbols-outlined text-[15px] text-outline">inventory_2</span>
+                                        <span>Stok saat ini: {{ $b->book->stock }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -207,14 +208,23 @@
                                         Batalkan
                                     </button>
                                 </form>
-                                <form method="POST" action="{{ route('siswa.booking.ambil', $b->id) }}">
-                                    @csrf
-                                    <button type="submit"
-                                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md shadow-sm transition-all">
-                                        <span class="material-symbols-outlined text-[16px]">confirmation_number</span>
-                                        Ambil Sekarang
+                                @if ($b->book->stock > 0)
+                                    <form method="POST" action="{{ route('siswa.booking.ambil', $b->id) }}">
+                                        @csrf
+                                        <button type="submit"
+                                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md shadow-sm transition-all">
+                                            <span
+                                                class="material-symbols-outlined text-[16px]">confirmation_number</span>
+                                            Ambil Sekarang
+                                        </button>
+                                    </form>
+                                @else
+                                    <button disabled
+                                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-low text-outline cursor-not-allowed font-label-md">
+                                        <span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+                                        Menunggu Buku Kembali
                                     </button>
-                                </form>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -226,7 +236,8 @@
                         </div>
                         <h3 class="font-headline-md text-on-surface">Belum Ada Booking</h3>
                         <p class="font-body-md text-secondary mt-2 max-w-md mx-auto">
-                            Tahan buku favoritmu lewat tombol "Booking / Reservasi" di halaman detail buku.
+                            Reservasi buku favorit yang stoknya habis lewat tombol "Booking / Reservasi" di halaman
+                            detail buku.
                         </p>
                         <a href="{{ route('siswa.katalog') }}"
                             class="inline-flex items-center gap-2 mt-4 px-6 py-2.5 bg-primary-container hover:bg-primary text-on-primary rounded-lg font-label-lg shadow-sm transition-all">

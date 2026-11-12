@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Dashboard Siswa - LITERA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -61,12 +62,12 @@
                     },
                     fontFamily: {
                         "body-md": ["Plus Jakarta Sans", "sans-serif"],
-                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Fraunces", "serif"],
                         "label-sm": ["Plus Jakarta Sans"],
                         "label-md": ["Plus Jakarta Sans"],
-                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Fraunces", "serif"],
                         "label-lg": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Fraunces", "serif"],
                         "body-lg": ["Plus Jakarta Sans"],
                         "body-sm": ["Plus Jakarta Sans"]
                     }
@@ -79,73 +80,12 @@
 <body class="bg-background font-body-md text-on-surface antialiased">
 
     {{-- SIDEBAR SERAGAM (ikon + aktif otomatis) --}}
-    <aside
-        class="fixed left-0 top-0 h-full w-72 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-sm">
-        <div class="flex flex-col flex-1 overflow-y-auto">
-            <div class="flex items-center gap-space-md px-margin py-space-lg">
-                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-on-primary text-[20px]">menu_book</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-headline-sm text-headline-sm text-on-primary tracking-tight">LITERA</span>
-                    <span class="font-label-sm text-label-sm text-inverse-primary">Portal Siswa</span>
-                </div>
-            </div>
-            <div class="mx-margin my-space-sm p-space-md rounded-xl bg-on-background/40 flex items-center gap-space-md">
-                <div class="w-10 h-10 rounded-full bg-primary flex-shrink-0 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-on-primary text-[20px]">person</span>
-                </div>
-                <div class="flex flex-col min-w-0">
-                    <span class="font-label-lg text-label-lg text-on-primary truncate">{{ Auth::user()->name }}</span>
-                    <span class="font-body-sm text-body-sm text-secondary-fixed-dim truncate">Siswa</span>
-                    <span class="font-label-sm text-label-sm text-secondary-fixed truncate">NISN:
-                        {{ Auth::user()->borrower->nisn ?? '-' }}</span>
-                </div>
-            </div>
-            <nav class="flex-1 px-margin py-space-md flex flex-col gap-space-xs">
-                <a href="{{ route('siswa.dashboard') }}"
-                    class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('siswa.dashboard') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
-                    <span class="material-symbols-outlined text-[20px]">space_dashboard</span>
-                    <span>Dashboard</span>
-                </a>
-                <a href="{{ route('siswa.katalog') }}"
-                    class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('siswa.katalog') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
-                    <span class="material-symbols-outlined text-[20px]">menu_book</span>
-                    <span>Katalog Buku</span>
-                </a>
-                <a href="{{ route('siswa.riwayat') }}"
-                    class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('siswa.riwayat') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
-                    <span class="material-symbols-outlined text-[20px]">history</span>
-                    <span>Riwayat Peminjaman</span>
-                </a>
-                <a href="{{ route('siswa.booking') }}"
-                    class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('siswa.booking') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
-                    <span class="material-symbols-outlined text-[20px]">bookmark</span>
-                    <span>Booking / Reservasi</span>
-                </a>
-                <a href="{{ route('siswa.perpanjangan') }}"
-                    class="flex items-center gap-space-md px-space-lg py-space-md rounded-lg transition-all font-label-lg text-label-lg {{ request()->routeIs('siswa.perpanjangan') ? 'bg-primary-container text-on-primary font-bold shadow-sm' : 'text-secondary-fixed-dim hover:bg-on-background/30 hover:text-on-primary' }}">
-                    <span class="material-symbols-outlined text-[20px]">update</span>
-                    <span>Perpanjangan Buku</span>
-                </a>
-            </nav>
-        </div>
-        <div class="p-margin">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="w-full flex items-center gap-space-md px-space-lg py-space-md rounded-lg text-error-container hover:bg-error/20 hover:text-on-error transition-all font-label-lg text-label-lg text-left">
-                    <span class="material-symbols-outlined text-[20px]">logout</span>
-                    <span>Keluar</span>
-                </button>
-            </form>
-        </div>
-    </aside>
+    @include('partials.siswa-sidebar')
 
     {{-- MAIN --}}
-    <div class="pl-72 flex flex-col min-h-screen">
+    <div class="lg:pl-72 flex flex-col min-h-screen">
         <header
-            class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
+            class="fixed top-0 left-0 lg:left-72 right-0 h-16 pl-16 lg:pl-margin-tablet bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
             <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md">
                 <span class="text-secondary">Portal Siswa</span>
                 <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>

@@ -49,8 +49,13 @@ class BookController extends Controller
         $waitingList = \App\Models\BookQueue::distinct('book_id')->count('book_id');
 
         return view('admin.books.index', compact(
-            'books', 'categories',
-            'totalBuku', 'totalEksemplar', 'siapPinjam', 'dipinjamPenuh', 'waitingList'
+            'books',
+            'categories',
+            'totalBuku',
+            'totalEksemplar',
+            'siapPinjam',
+            'dipinjamPenuh',
+            'waitingList'
         ));
     }
 

@@ -11,24 +11,20 @@ class Extension extends Model
 
     protected $fillable = [
         'borrowing_id',
-        'requested_days',
-        'status',
-        'reason',
-        'decided_by',
-        'decided_at',
+        'additional_days',
+        'status',        // menunggu, disetujui, ditolak
+        'approved_by',
     ];
 
-    protected $casts = [
-        'decided_at' => 'datetime',
-    ];
-
+    // 1 perpanjangan milik 1 peminjaman
     public function borrowing()
     {
         return $this->belongsTo(Borrowing::class);
     }
 
-    public function decidedBy()
+    // Petugas/admin yang menyetujui/menolak
+    public function approver()
     {
-        return $this->belongsTo(User::class, 'decided_by');
+        return $this->belongsTo(User::class, 'approved_by');
     }
 }

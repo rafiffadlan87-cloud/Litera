@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Riwayat Peminjaman - LITERA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -58,12 +59,12 @@
                     },
                     fontFamily: {
                         "body-md": ["Plus Jakarta Sans", "sans-serif"],
-                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Fraunces", "serif"],
                         "label-sm": ["Plus Jakarta Sans"],
                         "label-md": ["Plus Jakarta Sans"],
-                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Fraunces", "serif"],
                         "label-lg": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Fraunces", "serif"],
                         "body-lg": ["Plus Jakarta Sans"],
                         "body-sm": ["Plus Jakarta Sans"]
                     }
@@ -79,9 +80,9 @@
     @include('partials.siswa-sidebar')
 
     {{-- MAIN --}}
-    <div class="pl-72 flex flex-col min-h-screen">
+    <div class="lg:pl-72 flex flex-col min-h-screen">
         <header
-            class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
+            class="fixed top-0 left-0 lg:left-72 right-0 h-16 pl-16 lg:pl-margin-tablet bg-surface-container-lowest/90 backdrop-blur-xl shadow-sm z-40 flex items-center justify-between px-margin-tablet">
             <div class="flex items-center gap-space-xs text-on-surface-variant font-label-md">
                 <span class="text-secondary">Portal Siswa</span>
                 <span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
@@ -146,8 +147,9 @@
                                 $tabs = [
                                     'semua' => ['label' => 'Semua', 'count' => $totalCatatan],
                                     'dipinjam' => ['label' => 'Dipinjam', 'count' => $totalPinjam],
-                                    'dikembalikan' => ['label' => 'Dikembalikan', 'count' => $totalDikembalikan],
+                                    'booking' => ['label' => 'Booking Aktif', 'count' => $totalBooking],
                                     'waiting' => ['label' => 'Waiting List', 'count' => $totalWaiting],
+                                    'dikembalikan' => ['label' => 'Dikembalikan', 'count' => $totalDikembalikan],
                                 ];
                             @endphp
                             @foreach ($tabs as $key => $t)
@@ -285,14 +287,11 @@
                                         Detail
                                     </a>
                                     @if ($b->status === 'dipinjam' && !$isLate && $b->extensions_count < 1)
-                                        <form method="POST" action="#">
-                                            @csrf
-                                            <button type="submit"
-                                                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md shadow-sm transition-all">
-                                                <span class="material-symbols-outlined text-[16px]">update</span>
-                                                Perpanjang
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('siswa.perpanjangan') }}"
+                                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md shadow-sm transition-all">
+                                            <span class="material-symbols-outlined text-[16px]">update</span>
+                                            Perpanjang
+                                        </a>
                                     @elseif($b->status === 'dipinjam')
                                         <button disabled
                                             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-low text-outline cursor-not-allowed font-label-md">
@@ -353,10 +352,12 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-space-sm w-full md:w-auto justify-end flex-shrink-0">
-                                    <form method="POST" action="#">
+                                    <form method="POST" action="{{ route('siswa.antre.hapus', $q->id) }}"
+                                        onsubmit="return confirm('Yakin keluar dari waiting list {{ $q->book->title }}?');">
                                         @csrf
+                                        @method('DELETE')
                                         <button type="submit"
-                                            class="inline-flex items-center px-3 py-2 rounded-lg text-secondary hover:bg-surface-container font-label-md transition-colors">
+                                            class="inline-flex items-center px-3 py-2 rounded-lg text-error hover:bg-error-container/40 font-label-md transition-colors">
                                             Batal Antrean
                                         </button>
                                     </form>
