@@ -11,21 +11,33 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. User Admin
-        User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@litera.id',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-        ]);
+User::updateOrCreate(
+    ['email' => 'admin@litera.id'],
+    [
+        'name'     => 'Administrator',
+        'password' => Hash::make('password'),
+        'role'     => 'admin',
+    ]
+);
 
-        // 2. User Petugas
-        User::create([
-            'name' => 'Petugas Perpustakaan',
-            'email' => 'petugas@litera.id',
-            'password' => Hash::make('password'),
-            'role' => 'petugas',
-        ]);
+User::updateOrCreate(
+    ['email' => 'petugas@litera.id'],
+    [
+        'name'     => 'Petugas Perpustakaan',
+        'password' => Hash::make('password'),
+        'role'     => 'petugas',
+    ]
+);
+
+User::updateOrCreate(
+    ['email' => 'rafif@gmail.com'],
+    [
+        'name'     => 'Rafif Fadlan',
+        'password' => Hash::make('password'),
+        'role'     => 'siswa',
+    ]
+);
+
 
         // 3. Settings
         DB::table('settings_system')->insert([
