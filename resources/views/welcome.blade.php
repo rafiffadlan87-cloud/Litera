@@ -27,7 +27,7 @@
                             Pinjam buku dengan mudah dan pantau riwayat baca secara praktis melalui portal perpustakaan terpadu.
                         </p>
 
-                        {{-- Search Container Box (sekarang jadi form sungguhan) --}}
+                        {{-- Search Container Box --}}
                         <form action="{{ route('katalog') }}" method="GET"
                             class="bg-surface-container-lowest p-3 sm:p-4 rounded-xl shadow-md border-0 mt-2 flex flex-col gap-3">
                             <div class="flex flex-col sm:flex-row items-stretch gap-2.5">
@@ -110,7 +110,7 @@
                 </div>
             </section>
 
-            {{-- 2. POPULAR BOOKS SECTION (sama seperti welcome lama, cuma link 'Lihat Semua Katalog' jadi route) --}}
+            {{-- 2. POPULAR BOOKS SECTION --}}
             <section class="max-w-7xl mx-auto px-margin lg:px-margin-tablet py-10 w-full">
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
                     <div>
@@ -377,4 +377,46 @@
             </section>
         </div>
     </div>
+
+    {{-- Navbar HP: tampilkan Masuk saja, sembunyikan Daftar. Desktop tidak berubah. --}}
+    @guest
+        <script>
+            (function () {
+                var LOGIN_URL = @json(route('login'));
+                var mq = window.matchMedia('(max-width: 767px)');
+                var made = null;
+
+                function apply() {
+                    var header = document.querySelector('header');
+                    if (!header) return;
+                    var reg = header.querySelector('a[href*="register"]');
+                    var log = header.querySelector('a[href*="login"]');
+
+                    if (mq.matches) {
+                        if (reg) reg.style.display = 'none';
+                        if (log) {
+                            log.style.display = 'inline-flex';
+                        } else if (reg && !made) {
+                            made = document.createElement('a');
+                            made.href = LOGIN_URL;
+                            made.className = 'h-[38px] px-space-md flex items-center justify-center gap-1 rounded-xl bg-primary-container text-on-primary font-label-md text-label-md shadow-[0_2px_4px_rgba(37,99,235,0.2)] active:scale-95 transition-all';
+                            made.innerHTML = '<span class="material-symbols-outlined text-[18px]">login</span>Masuk';
+                            reg.parentNode.insertBefore(made, reg);
+                        }
+                    } else {
+                        if (reg) reg.style.display = '';
+                        if (log) log.style.display = '';
+                        if (made) { made.remove(); made = null; }
+                    }
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', apply);
+                } else {
+                    apply();
+                }
+                mq.addEventListener('change', apply);
+            })();
+        </script>
+    @endguest
 @endsection

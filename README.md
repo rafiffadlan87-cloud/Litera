@@ -1,4 +1,4 @@
-<p align="center">
+<p align="center">q
   <img src="assets/logo.svg" alt="LITERA Logo" width="160"/>
 </p>
 
