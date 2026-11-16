@@ -131,6 +131,7 @@
                         <span class="material-symbols-outlined">check_circle</span><span>{{ session('success') }}</span>
                     </div>
                 @endif
+                {{-- error --}}
                 @if (session('error'))
                     <div class="p-4 rounded-xl bg-error-container text-on-error-container flex items-center gap-2">
                         <span class="material-symbols-outlined">error</span><span>{{ session('error') }}</span>
