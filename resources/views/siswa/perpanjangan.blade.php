@@ -156,12 +156,11 @@
                                     class="px-3 py-1.5 rounded-full bg-error-container text-error font-label-sm font-bold">Terlambat
                                     — wajib kembalikan + denda</span>
                             @elseif(!$ext)
-                                <form method="POST" action="{{ route('siswa.perpanjangan.store', $b->id) }}">
+                                <form method="POST" action="{{ route('siswa.perpanjangan', $b->id) }}" class="inline">
                                     @csrf
                                     <button type="submit"
-                                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md font-bold shadow-sm transition-all">
-                                        <span class="material-symbols-outlined text-[16px]">update</span>
-                                        Ajukan Perpanjangan (+7 hari)
+                                        class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md">
+                                        Ajukan Perpanjangan
                                     </button>
                                 </form>
                             @elseif($ext->status === 'menunggu')

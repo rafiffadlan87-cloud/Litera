@@ -11,6 +11,7 @@ class Extension extends Model
 
     protected $fillable = [
         'borrowing_id',
+        'requested_days',
         'additional_days',
         'status',        // menunggu, disetujui, ditolak
         'approved_by',

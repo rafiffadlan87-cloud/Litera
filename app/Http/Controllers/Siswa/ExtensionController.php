@@ -47,12 +47,15 @@ class ExtensionController extends Controller
             return back()->with('error', 'Perpanjangan maksimal 1x per buku dan sudah pernah diajukan.');
         }
 
+
         Extension::create([
-            'borrowing_id'    => $borrowing->id,
+            'borrowing_id'   => $borrowing->id,
+            'requested_days' => 7,
             'additional_days' => 7,
-            'status'          => 'menunggu',
+            'status'         => 'menunggu',
         ]);
 
-        return back()->with('success', 'Pengajuan perpanjangan "' . $borrowing->book->title . '" terkirim. Menunggu persetujuan petugas.');
+        return back()->with('success', 'Perpanjangan diajukan, menunggu persetujuan petugas.');
+
     }
 }

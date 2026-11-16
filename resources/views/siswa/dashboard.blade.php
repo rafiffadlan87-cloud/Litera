@@ -233,18 +233,23 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+                                    @php
+                                        $totalJam = (int) floor(abs($daysLeft) * 24);
+                                        $sisaHari = intdiv($totalJam, 24);
+                                        $sisaJam = $totalJam % 24;
+                                    @endphp
                                     @if ($daysLeft < 0)
                                         <span
                                             class="px-3 py-1 rounded-full bg-error-container text-error font-label-sm font-bold">Terlambat
-                                            {{ abs($daysLeft) }} hari</span>
-                                    @elseif($daysLeft <= 3)
+                                            {{ $sisaHari }} hari {{ $sisaJam }} jam</span>
+                                    @elseif ($daysLeft <= 3)
                                         <span
                                             class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-label-sm font-bold">Sisa
-                                            {{ $daysLeft }} hari</span>
+                                            {{ $sisaHari }} hari {{ $sisaJam }} jam</span>
                                     @else
                                         <span
                                             class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm font-bold">Sisa
-                                            {{ $daysLeft }} hari</span>
+                                            {{ $sisaHari }} hari {{ $sisaJam }} jam</span>
                                     @endif
                                     <a href="{{ route('siswa.detail', $b->book->id) }}"
                                         class="px-3 py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md hover:bg-surface-container">Detail</a>

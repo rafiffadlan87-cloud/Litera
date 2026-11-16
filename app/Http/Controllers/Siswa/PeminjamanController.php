@@ -34,7 +34,7 @@ class PeminjamanController extends Controller
             ->where('book_id', $book->id)
             ->whereIn('status', ['dipinjam', 'terlambat'])
             ->exists();
-
+        // ketika buku sadah di pinjam
         if ($sudahPinjam) {
             return back()->with('error', 'Kamu sedang meminjam buku ini. Kembalikan dulu sebelum meminjam lagi.');
         }
