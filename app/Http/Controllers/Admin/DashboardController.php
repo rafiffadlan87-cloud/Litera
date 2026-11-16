@@ -108,7 +108,7 @@ class DashboardController extends Controller
             return back()->with('error', 'Kuota pinjaman ' . $borrower->name . ' penuh (5 buku).');
         }
 
-        // Hormati prioritas FIFO waiting list
+        // prioritas FIFO waiting list
         $first = BookQueue::where('book_id', $book->id)->orderBy('created_at')->first();
         if ($first && $first->user_id !== $borrower->user_id) {
             $pemilik = User::find($first->user_id);
