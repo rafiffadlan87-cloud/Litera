@@ -18,9 +18,9 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: litera
-      DB_USERNAME: root
-      DB_PASSWORD: litera
-      DB_ROOT_PASSWORD: litera
+      DB_USERNAME: demo_app_db
+      DB_PASSWORD: demopass123
+      DB_ROOT_PASSWORD: demopass123
       SESSION_DRIVER: file
       CACHE_STORE: file
       QUEUE_CONNECTION: sync
@@ -43,7 +43,11 @@ services:
     volumes:
       - litera_database:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}"]
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 20
