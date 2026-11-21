@@ -115,6 +115,19 @@ Akses di browser: `http://127.0.0.1:8000`
 
 ---
 
+## 🚀 Deployment dengan Coolify
+
+Coolify tidak otomatis menggunakan `.env` lokal. Tambahkan variabel berikut pada **Environment Variables** resource Compose di Coolify:
+
+- `APP_KEY`: gunakan key aplikasi yang sudah ada, atau buat dengan `php artisan key:generate --show`.
+- `DB_PASSWORD`: password untuk user database `litera`.
+- `DB_ROOT_PASSWORD`: password root MySQL yang berbeda dari `DB_PASSWORD`.
+- `APP_URL`: URL publik aplikasi, misalnya `https://litera.example.com`.
+
+Aktifkan opsi **Available at Buildtime** dan **Available at Runtime** untuk variabel tersebut agar Compose dapat menggunakannya saat build dan container dapat menggunakannya saat berjalan. Jangan masukkan nilai rahasia ke Git. Setelah deployment berhasil, jalankan `php artisan migrate --force` melalui terminal container aplikasi di Coolify.
+
+---
+
 ## 🔐 Contoh Konfigurasi `.env`
 
 ```dotenv
