@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: litera-app
+    restart: unless-stopped
+    ports:
+      - "1500:80"
+    environment:
+      APP_NAME: LITERA
+      APP_ENV: production
+      APP_KEY: ${APP_KEY:?Set APP_KEY in the root .env file}
+      APP_DEBUG: "false"
+      APP_URL: ${APP_URL:-http://localhost:1500}
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: litera
+      DB_USERNAME: litera
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the root .env file}
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+      FILESYSTEM_DISK: public
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - litera_storage:/var/www/html/storage/app/public
+
+  db:
+    image: mysql:8.4
+    container_name: litera-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: litera
+      MYSQL_USER: litera
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the root .env file}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD in the root .env file}
+    volumes:
+      - litera_database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+volumes:
+  litera_database:
+  litera_storage:
