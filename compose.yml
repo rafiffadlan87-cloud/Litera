@@ -6,7 +6,7 @@ services:
     container_name: litera-app
     restart: unless-stopped
     expose:
-      - 10 "35"
+      - 10 "80"
     environment:
       APP_NAME: LITERA
       APP_ENV: production
