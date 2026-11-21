@@ -120,11 +120,12 @@ Akses di browser: `http://127.0.0.1:8000`
 Coolify tidak otomatis menggunakan `.env` lokal. Tambahkan variabel berikut pada **Environment Variables** resource Compose di Coolify:
 
 - `APP_KEY`: gunakan key aplikasi yang sudah ada, atau buat dengan `php artisan key:generate --show`.
-- `DB_PASSWORD`: password untuk user database `litera`.
+- `DB_USERNAME`: nama user database (default `demo_app_db`).
+- `DB_PASSWORD`: password untuk user database.
 - `DB_ROOT_PASSWORD`: password root MySQL yang berbeda dari `DB_PASSWORD`.
 - `APP_URL`: URL publik aplikasi, misalnya `https://litera.example.com`.
 
-Aktifkan opsi **Available at Buildtime** dan **Available at Runtime** untuk variabel tersebut agar Compose dapat menggunakannya saat build dan container dapat menggunakannya saat berjalan. Arahkan domain Coolify ke port internal `80`; Compose mengekspos port itu ke proxy tanpa memublikasikan port host. Jangan masukkan nilai rahasia ke Git. Setelah deployment berhasil, jalankan `php artisan migrate --force` melalui terminal container aplikasi di Coolify.
+Atur variabel tersebut di Coolify agar tersedia saat runtime. Kredensial database tidak diperlukan untuk membangun image; Compose memakai nilai kosong hanya pada tahap build, sehingga password tetap harus diisi di Coolify sebelum container dijalankan. Arahkan domain Coolify ke port internal `80`; Compose mengekspos port itu ke proxy tanpa memublikasikan port host. Jangan masukkan nilai rahasia ke Git. Setelah deployment berhasil, jalankan `php artisan migrate --force` melalui terminal container aplikasi di Coolify.
 
 ---
 
