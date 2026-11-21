@@ -6,13 +6,13 @@ services:
     container_name: litera-app
     restart: unless-stopped
     port:
-      - 1035 "80"
+      - "${APP_PORT:-1035}:80"
     environment:
       APP_NAME: LITERA
       APP_ENV: production
       APP_KEY: base64:EQgJ5pckgxhaqDV4To4z+3z1nSo9dPeb9Z531i4Me7Q=
       APP_DEBUG: "false"
-      APP_URL: http://localhost
+      APP_URL: http://localhost:8000
       LOG_CHANNEL: stderr
       DB_CONNECTION: mysql
       DB_HOST: db
