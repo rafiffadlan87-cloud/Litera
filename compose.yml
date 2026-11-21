@@ -6,7 +6,7 @@ services:
     container_name: litera-app
     restart: unless-stopped
     port:
-      - "${APP_PORT:-1035}:80"
+      - "${APP_PORT:-1035}:8000"
     environment:
       APP_NAME: LITERA
       APP_ENV: production
